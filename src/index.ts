@@ -1,5 +1,5 @@
 import express from 'express';
-import { testConnection, processText, processTextAsync, getResult } from './services/projectZeroAIClient';
+import { testConnection, processText, processTextAsync, getResult } from './services/projectZeroAIClient/projectZeroAIClient';
 
 const app = express();
 const port = process.env.PORT || 3000;
