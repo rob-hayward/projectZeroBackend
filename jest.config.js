@@ -9,5 +9,6 @@ module.exports = {
     "<rootDir>/src/**/__tests__/**/*.[jt]s?(x)",
     "<rootDir>/src/**/?(*.)+(spec|test).[jt]s?(x)"
   ],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],  
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  forceExit: true
 };

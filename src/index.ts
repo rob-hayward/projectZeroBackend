@@ -1,3 +1,4 @@
+// /Users/rob/vsCodeProjects/project-zero-backend/src/index.ts
 import express from 'express';
 import { testConnection, processText, processTextAsync, getResult } from './services/projectZeroAIClient/projectZeroAIClient';
 

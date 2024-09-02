@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-global.afterAll(async () => {
+jest.setTimeout(30000); // 30 seconds
+
+afterAll(async () => {
   await new Promise(resolve => setTimeout(resolve, 500)); // wait for possible pending requests
-  axios.interceptors.request.use(() => {
-    throw new Error('Request blocked during teardown');
-  });
+  if (axios.defaults.httpsAgent) {
+    axios.defaults.httpsAgent.destroy();
+  }
 });

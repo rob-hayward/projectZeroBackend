@@ -1,0 +1,20 @@
+{
+    "status": "completed",
+    "processed_data": {
+      "id": "1725288616241",
+      "keyword_extraction": {
+        "keywords": [
+          "neural",
+          "learning",
+          "test",
+          "networks",
+          "input",
+          "processing",
+          "data",
+          "asynchronous",
+          "big",
+          "deep"
+        ]
+      }
+    }
+  }

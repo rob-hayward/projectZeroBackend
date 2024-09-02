@@ -1,22 +1,18 @@
 import axios from 'axios';
-import nock from 'nock';
+import fs from 'fs';
+import path from 'path';
 import { testConnection, processText, processTextAsync, getResult } from './projectZeroAIClient';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
+const readTestInput = (filename: string): string => {
+  return fs.readFileSync(path.join(__dirname, 'test-inputs', filename), 'utf-8');
+};
+
 describe('projectZeroAIClient', () => {
-  beforeAll(() => {
-    nock.disableNetConnect();
-  });
-
-  afterAll(() => {
-    nock.enableNetConnect();
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
-    console.log = jest.fn();
   });
 
   it('should test connection successfully', async () => {
@@ -25,46 +21,54 @@ describe('projectZeroAIClient', () => {
     
     const result = await testConnection();
     
-    console.log('testConnection response:', JSON.stringify(result, null, 2));
     expect(result).toEqual(mockResponse);
+    expect(mockedAxios.get).toHaveBeenCalledWith('http://localhost:5001/');
   });
 
   it('should process text successfully', async () => {
-    const mockResponse = { id: '123', keyword_extraction: { keywords: ['test'] } };
+    const mockResponse = { id: '123', keyword_extraction: { keywords: ['AI', 'machine learning', 'natural language processing'] } };
     mockedAxios.post.mockResolvedValueOnce({ data: mockResponse });
     
-    const testContent = 'Test content';
-    console.log('processText input:', testContent);
-    
+    const testContent = readTestInput('test_input_1.txt');
     const result = await processText(testContent);
     
-    console.log('processText response:', JSON.stringify(result, null, 2));
     expect(result).toEqual(mockResponse);
+    expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:5001/process_text', {
+      id: expect.any(String),
+      data: testContent
+    });
   });
 
   it('should process text asynchronously', async () => {
-    const mockResponse = { task_id: '123', status: 'processing' };
+    const mockResponse = { task_id: '456', status: 'processing' };
     mockedAxios.post.mockResolvedValueOnce({ data: mockResponse });
     
-    const testContent = 'Test content';
-    console.log('processTextAsync input:', testContent);
-    
+    const testContent = readTestInput('test_input_2.txt');
     const result = await processTextAsync(testContent);
     
-    console.log('processTextAsync response:', JSON.stringify(result, null, 2));
     expect(result).toEqual(mockResponse);
+    expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:5001/process_text_async', {
+      id: expect.any(String),
+      data: testContent
+    });
   });
 
   it('should get result successfully', async () => {
-    const mockResponse = { status: 'completed', processed_data: { id: '123', keyword_extraction: { keywords: ['test'] } } };
+    const mockResponse = { 
+      status: 'completed', 
+      processed_data: { 
+        id: '456', 
+        keyword_extraction: { 
+          keywords: ['big data', 'neural networks', 'deep learning'] 
+        } 
+      } 
+    };
     mockedAxios.get.mockResolvedValueOnce({ data: mockResponse });
     
-    const taskId = '123';
-    console.log('getResult input taskId:', taskId);
-    
+    const taskId = '456';
     const result = await getResult(taskId);
     
-    console.log('getResult response:', JSON.stringify(result, null, 2));
     expect(result).toEqual(mockResponse);
+    expect(mockedAxios.get).toHaveBeenCalledWith('http://localhost:5001/get_result/456');
   });
 });

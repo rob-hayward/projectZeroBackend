@@ -1,15 +1,15 @@
-interface Definition {
-    text: string;
-    votes: number;
-  }
-  
-  interface WordEntry {
-    definitions: Definition[];
-    dataIds: string[];
-  }
-  
-  interface WordDictionary {
-    [word: string]: WordEntry;
-  }
-  
-  export { Definition, WordEntry, WordDictionary };
+// src/services/word-processing-service/types.ts
+
+export interface Definition {
+  text: string | null;
+  votes: number;
+}
+
+export interface WordEntry {
+  definitions: Definition[];
+  dataIds: string[];
+}
+
+export interface WordDictionary {
+  [word: string]: WordEntry;
+}

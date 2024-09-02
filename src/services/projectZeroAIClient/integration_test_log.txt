@@ -1,0 +1,57 @@
+
+--- Test Connection Response ---
+{
+  "message": "Welcome to projectZeroAI!"
+}
+-------------------------
+
+--- Process Text Synchronously Response ---
+{
+  "id": "1725288616123",
+  "keyword_extraction": {
+    "keywords": [
+      "test",
+      "keywords",
+      "text",
+      "learning",
+      "language",
+      "input",
+      "processing",
+      "machine",
+      "ai",
+      "contains"
+    ]
+  }
+}
+-------------------------
+
+--- Process Text Asynchronously (Initial) Response ---
+{
+  "task_id": "task_1725288616241",
+  "message": "Text processing started",
+  "status": "processing"
+}
+-------------------------
+
+--- Process Text Asynchronously (Final) Response ---
+{
+  "status": "completed",
+  "processed_data": {
+    "id": "1725288616241",
+    "keyword_extraction": {
+      "keywords": [
+        "neural",
+        "learning",
+        "test",
+        "networks",
+        "input",
+        "processing",
+        "data",
+        "asynchronous",
+        "big",
+        "deep"
+      ]
+    }
+  }
+}
+-------------------------
