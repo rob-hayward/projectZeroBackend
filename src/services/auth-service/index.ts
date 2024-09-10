@@ -4,7 +4,6 @@ import express from 'express';
 import { auth } from 'express-oauth2-jwt-bearer';
 import dotenv from 'dotenv';
 import authRoutes from './routes';
-import http from 'http';
 
 dotenv.config();
 
@@ -35,12 +34,10 @@ app.get('/auth/api/authorized', (req, res) => {
   res.json({ message: 'Secured Resource', user: req.auth });
 });
 
-const server = http.createServer(app);
-
 if (require.main === module) {
-  server.listen(port, () => {
+  app.listen(port, () => {
     console.log(`Auth Service running on port ${port}`);
   });
 }
 
-export { app, server };
+export { app };

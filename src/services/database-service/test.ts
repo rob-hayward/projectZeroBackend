@@ -1,10 +1,8 @@
 // src/services/database-service/test.ts
 
-import { DatabaseService } from './index';
+import { databaseService } from './index';
 
 async function testDatabaseService() {
-  const databaseService = new DatabaseService();
-
   try {
     console.log("Starting database service test...");
 
